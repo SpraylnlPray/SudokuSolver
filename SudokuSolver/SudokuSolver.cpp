@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "Field.h"
+#include "SudokuField.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 
 using namespace std;
 
-bool solve(Field* field);
+bool solve(SudokuField* field);
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
 		cout << "Error when opening the input file." << endl;
 	}
 	
-	Field* field = new Field(input);
+	SudokuField* field = new SudokuField(input);
 	cout << "Input: " << endl;
 	field->showData();
 	
@@ -38,7 +38,7 @@ int main()
 		cout << "No solution possible" << endl;
 }
 
-bool solve(Field* field)
+bool solve(SudokuField* field)
 {
 	const int gridSize = 9;
 

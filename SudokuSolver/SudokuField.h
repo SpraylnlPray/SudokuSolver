@@ -23,6 +23,8 @@ public:
 
 private:
 	short gridSize = 9;
+	void createRowsAndCols(SudokuEntry* entries[]);
+	void createBlocks(SudokuEntry* entries[]);
 	void saveData(SudokuEntry* entries[]);
 };
 

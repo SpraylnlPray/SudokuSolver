@@ -152,13 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
-    <ClInclude Include="Field.h" />
+    <ClInclude Include="SudokuField.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SudokuEntry.h" />
     <ClInclude Include="SudokuVector.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="SudokuField.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

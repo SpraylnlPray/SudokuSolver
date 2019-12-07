@@ -24,10 +24,10 @@
     <ClInclude Include="Block.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Field.h">
+    <ClInclude Include="SudokuEntry.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="SudokuEntry.h">
+    <ClInclude Include="SudokuField.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClCompile Include="SudokuSolver.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
+    <ClCompile Include="SudokuField.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

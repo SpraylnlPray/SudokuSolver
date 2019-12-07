@@ -9,7 +9,7 @@ SudokuField::SudokuField(string input)
 	
 	SudokuEntry* entries[81];
 	for (short i = 0; i < 81; i++)
-		entries[i] = new SudokuEntry((int)input[i] - 48); // -48 to convert from ascii value to actual input
+		entries[i] = new SudokuEntry((int)input[i] - 48, i);
 
 	for (short i = 0; i < gridSize; i++) // create data structures
 	{
@@ -51,52 +51,59 @@ SudokuEntry* SudokuField::getUnassignedCell()
 	return nullptr;
 }
 
-void SudokuField::saveData(SudokuEntry* entries[])
+void SudokuField::createRowsAndCols(SudokuEntry* entries[])
 {
-	short blockInputIndex = 0;
-	short colInputIndex = 0;
-	short rowInputIndex = 0;
-	for (short rowIndex = 0; rowIndex < gridSize; rowIndex++) // Go through the lines of the field
+	short entryIndex = 0;
+	for (short rowIndex = 0; rowIndex < gridSize; rowIndex++) // Go through the rows of the field
 	{
-		for (short rowPos = 0; rowPos < gridSize; rowPos++, rowInputIndex++) // fill row with 9 consecutive input values
+		for (short colIndex = 0; colIndex < gridSize; colIndex++, entryIndex++) // go through the columns of the field
 		{
-			entries[rowInputIndex]->row = rows[rowIndex];
-			rows[rowPos]->addValue(entries[rowInputIndex], rowPos);
-		}
-		for (short colIndex = 0; colIndex < gridSize; colIndex++, colInputIndex++) // follow the rowIndex-th entry of each column with 9 consecutive input values 
-		{
-			entries[colInputIndex]->col = cols[colIndex];
-			cols[colIndex]->addValue(entries[colInputIndex], colIndex);
+			entries[entryIndex]->row = rows[rowIndex];
+			rows[rowIndex]->addValue(entries[entryIndex], colIndex);
+			entries[entryIndex]->col = cols[colIndex];
+			cols[colIndex]->addValue(entries[entryIndex], rowIndex);
 		}
 	}
+}
+
+void SudokuField::createBlocks(SudokuEntry* entries[])
+{
+	short inputIndex = 0;
 
 	for (short blockIndex = 0; blockIndex < gridSize; blockIndex += 3) // go through the 3 lines of blocks
 	{
-		for (short linePos = 0; linePos < 27; linePos++, blockInputIndex++) // each line of blocks contains 3*gridSize=27 inputs
+		for (short linePos = 0; linePos < 27; linePos++, inputIndex++) // each line of blocks contains 3*gridSize=27 inputs
 		{
-			switch (linePos % gridSize) // determine to which block of the line the input belongs
+			switch (linePos % gridSize)
 			{
 			case 0:
 			case 1:
 			case 2:
-				entries[blockInputIndex]->block = blocks[blockIndex];
-				blocks[blockIndex]->addValue(entries[blockInputIndex]);
+				entries[inputIndex]->block = blocks[blockIndex];
+				blocks[blockIndex]->addValue(entries[inputIndex]);
 				break;
 			case 3:
 			case 4:
 			case 5:
-				entries[blockInputIndex]->block = blocks[blockIndex + 1];
-				blocks[blockIndex + 1]->addValue(entries[blockInputIndex]);
+				entries[inputIndex]->block = blocks[blockIndex + 1];
+				blocks[blockIndex + 1]->addValue(entries[inputIndex]);
 				break;
 			case 6:
 			case 7:
 			case 8:
-				entries[blockInputIndex]->block = blocks[blockIndex + 2];
-				blocks[blockIndex + 2]->addValue(entries[blockInputIndex]);
+				entries[inputIndex]->block = blocks[blockIndex + 2];
+				blocks[blockIndex + 2]->addValue(entries[inputIndex]);
 				break;
 			default:
 				break;
 			}
 		}
 	}
+
+}
+
+void SudokuField::saveData(SudokuEntry* entries[])
+{
+	createRowsAndCols(entries);
+	createBlocks(entries);
 }
