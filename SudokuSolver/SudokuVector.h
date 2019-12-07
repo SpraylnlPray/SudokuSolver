@@ -7,8 +7,8 @@ using namespace std;
 class SudokuVector
 {
 public:
-	SudokuVector();
-	~SudokuVector();
+	SudokuVector() {}
+	~SudokuVector() {}
 
 	bool containsValue(int val) 
 	{

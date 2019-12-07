@@ -11,16 +11,20 @@ bool solve(Field* field);
 int main()
 {
 	string input;
-
-	ifstream reader("input.txt");
-	if (reader.is_open())
+	try
 	{
-		getline(reader, input);
-		reader.close();
+		ifstream reader("input.txt");
+		if (reader.is_open())
+		{
+			getline(reader, input);
+			reader.close();
+		}
 	}
-	else
-		cout << "Error when opening file" << endl;
-
+	catch (exception& ex)
+	{
+		cout << "Error when opening the input file." << endl;
+	}
+	
 	Field* field = new Field(input);
 	cout << "Input: " << endl;
 	field->showData();
@@ -38,16 +42,16 @@ bool solve(Field* field)
 {
 	const int gridSize = 9;
 
-	SudokuEntry* emptyCell = field->getUnassignedCell();
+	SudokuEntry* emptyCell = field->getUnassignedCell(); // check if the field has an empty cell
 	if (!emptyCell)
 		return true;
 
-	for (short i = 1; i <= gridSize; i++)
+	for (short i = 1; i <= gridSize; i++) // go from 1 to 9
 	{
-		if (!emptyCell->block->containsValue(i) && !emptyCell->row->containsValue(i) && !emptyCell->col->containsValue(i))
+		if (!emptyCell->block->containsValue(i) && !emptyCell->row->containsValue(i) && !emptyCell->col->containsValue(i)) // check if environment of empty cell contains value
 		{
-			emptyCell->value = i;
-			if (solve(field))
+			emptyCell->value = i; // if not, assign value to cell
+			if (solve(field)) // from this state keep on trying to solve the sudoku
 				return true;
 
 			emptyCell->value = 0;

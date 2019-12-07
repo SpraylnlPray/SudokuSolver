@@ -6,8 +6,8 @@ using namespace std;
 class Block
 {
 public:
-	Block();
-	~Block();
+	Block() {}
+	~Block() {}
 
 	bool containsValue(int val)
 	{
@@ -24,7 +24,14 @@ public:
 		counter++;
 	}
 
-	SudokuEntry* getUnassignedCell();
+	SudokuEntry* getUnassignedCell()
+	{
+		for (short i = 0; i < 9; i++)
+			if (entries[i]->value == 0)
+				return entries[i];
+
+		return nullptr;
+	}
 
 	SudokuEntry* entries[9];
 	int counter = 0;

@@ -5,8 +5,8 @@ class Block;
 class SudokuEntry
 {
 public:
-	SudokuEntry(int value, int id) : value(value), id(id) {};
-	~SudokuEntry();
+	SudokuEntry(int value, int id) : value(value), id(id) {}
+	~SudokuEntry() {}
 
 	int value;
 	int id;

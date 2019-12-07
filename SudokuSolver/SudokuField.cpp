@@ -1,15 +1,15 @@
 #include "pch.h"
-#include "Field.h"
+#include "SudokuField.h"
 
 
-Field::Field(string input)
+SudokuField::SudokuField(string input)
 {
 	input.erase(remove_if(input.begin(), input.end(), ::isspace), input.end());
 	input.erase(remove(input.begin(), input.end(), ','), input.end()); // format input data
 	
 	SudokuEntry* entries[81];
 	for (short i = 0; i < 81; i++)
-		entries[i] = new SudokuEntry((int)input[i] - 48, i);
+		entries[i] = new SudokuEntry((int)input[i] - 48); // -48 to convert from ascii value to actual input
 
 	for (short i = 0; i < gridSize; i++) // create data structures
 	{
@@ -22,11 +22,11 @@ Field::Field(string input)
 }
 
 
-Field::~Field()
+SudokuField::~SudokuField()
 {
 }
 
-void Field::showData()
+void SudokuField::showData()
 {
 	for (short i = 0; i < gridSize; i++)
 	{
@@ -39,7 +39,7 @@ void Field::showData()
 	cout << " =========================================" << endl;
 }
 
-SudokuEntry* Field::getUnassignedCell()
+SudokuEntry* SudokuField::getUnassignedCell()
 {
 	for (short i = 0; i < gridSize; i++)
 	{
@@ -51,22 +51,22 @@ SudokuEntry* Field::getUnassignedCell()
 	return nullptr;
 }
 
-void Field::saveData(SudokuEntry* entries[])
+void SudokuField::saveData(SudokuEntry* entries[])
 {
 	short blockInputIndex = 0;
 	short colInputIndex = 0;
 	short rowInputIndex = 0;
-	for (short rowIndex = 0; rowIndex < gridSize; rowIndex++) // Go through the gridSize lines of the field
+	for (short rowIndex = 0; rowIndex < gridSize; rowIndex++) // Go through the lines of the field
 	{
-		for (short rowPos = 0; rowPos < gridSize; rowPos++, rowInputIndex++)
+		for (short rowPos = 0; rowPos < gridSize; rowPos++, rowInputIndex++) // fill row with 9 consecutive input values
 		{
 			entries[rowInputIndex]->row = rows[rowIndex];
-			rows[rowIndex]->addValue(entries[rowInputIndex], rowPos);
+			rows[rowPos]->addValue(entries[rowInputIndex], rowPos);
 		}
-		for (short colIndex = 0; colIndex < gridSize; colIndex++, colInputIndex++)
+		for (short colIndex = 0; colIndex < gridSize; colIndex++, colInputIndex++) // follow the rowIndex-th entry of each column with 9 consecutive input values 
 		{
 			entries[colInputIndex]->col = cols[colIndex];
-			cols[colIndex]->addValue(entries[colInputIndex], rowIndex);
+			cols[colIndex]->addValue(entries[colInputIndex], colIndex);
 		}
 	}
 
@@ -74,7 +74,7 @@ void Field::saveData(SudokuEntry* entries[])
 	{
 		for (short linePos = 0; linePos < 27; linePos++, blockInputIndex++) // each line of blocks contains 3*gridSize=27 inputs
 		{
-			switch (linePos % gridSize)
+			switch (linePos % gridSize) // determine to which block of the line the input belongs
 			{
 			case 0:
 			case 1:
