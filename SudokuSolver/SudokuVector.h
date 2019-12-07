@@ -1,4 +1,6 @@
 #pragma once
+#include "SudokuEntry.h"
+#include <iostream>
 
 using namespace std;
 
@@ -11,17 +13,38 @@ public:
 	bool containsValue(int val) 
 	{
 		for (short i = 0; i < 9; i++)
-			if (values[i] == val)
+			if (entries[i]->value == val)
 				return true;
+
+		return false;
 	}
 
-	void addValue(int val, int index)
+	void addValue(SudokuEntry* entry, int index)
 	{
-		values[index] = val;
-		count++;
+		entries[index] = entry;
 	}
 
-	int count = 0;
-	int values[9];
+	void showData()
+	{
+		for (short i = 0; i < 9; i++)
+		{
+			if (i % 3 == 0)
+				cout << " || " << entries[i]->value;
+			else
+				cout << " | " << entries[i]->value;
+		}
+		cout << " ||" << endl;
+	}
+
+	bool HasUnassignedCell()
+	{
+		for (short i = 0; i < 9; i++)
+			if (entries[i] == 0)
+				return true;
+
+		return false;
+	}
+
+	SudokuEntry* entries[9];
 };
 

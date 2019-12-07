@@ -27,6 +27,9 @@
     <ClInclude Include="Field.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="SudokuEntry.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -42,6 +45,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Field.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="SudokuEntry.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
