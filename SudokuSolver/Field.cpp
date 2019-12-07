@@ -8,14 +8,7 @@ Field::Field(string input)
 	input.erase(remove(input.begin(), input.end(), ','), input.end());
 	int numbers[81];
 	for (short i = 0; i < 81; i++)
-		numbers[i] = (int)input[i] - 48;
-
-	for (size_t i = 0; i < 9; i++)
-	{
-		blocks[i] = new Block();
-		rows[i] = new SudokuVector();
-		cols[i] = new SudokuVector();
-	}
+		numbers[i] = (int)input[i] - 48; // -48 to convert from ascii code to original value
 
 	saveData(numbers);
 }
@@ -27,26 +20,41 @@ Field::~Field()
 
 void Field::saveData(int input[])
 {
-	for (short i = 0; i < 9; i += 3) // go through the lines of blocks (3 blocks per line)
+	short blockInputIndex = 0;
+	short colInputIndex = 0;
+	short rowInputIndex = 0;
+	for (short rowIndex = 0; rowIndex < 9; rowIndex++) // Go through the 9 lines of the field
 	{
-		for (short j = 0; j < 27; j++) // each line of blocks contains 3*9=27 inputs
+		for (short rowPos = 0; rowPos < 9; rowPos++, rowInputIndex++)
 		{
-			switch (j % 9)
+			rows[rowIndex].addValue(input[rowInputIndex], rowPos);
+		}
+		for (short colIndex = 0; colIndex < 9; colIndex++, colInputIndex++)
+		{
+			cols[colIndex].addValue(input[colInputIndex], rowIndex);
+		}
+	}
+
+	for (short blockIndex = 0; blockIndex < 9; blockIndex += 3) // go through the 3 lines of blocks
+	{
+		for (short linePos = 0; linePos < 27; linePos++, blockInputIndex++) // each line of blocks contains 3*9=27 inputs
+		{
+			switch (linePos % 9)
 			{
 			case 0:
 			case 1:
 			case 2:
-				blocks[i]->addValue(input[j]);
+				blocks[blockIndex].addValue(input[blockInputIndex]);
 				break;
 			case 3:
 			case 4:
 			case 5:
-				blocks[i + 1]->addValue(input[j]);
+				blocks[blockIndex + 1].addValue(input[blockInputIndex]);
 				break;
 			case 6:
 			case 7:
 			case 8:
-				blocks[i + 2]->addValue(input[j]);
+				blocks[blockIndex + 2].addValue(input[blockInputIndex]);
 				break;
 			default:
 				break;

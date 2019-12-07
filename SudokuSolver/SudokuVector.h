@@ -15,6 +15,13 @@ public:
 				return true;
 	}
 
+	void addValue(int val, int index)
+	{
+		values[index] = val;
+		count++;
+	}
+
+	int count = 0;
 	int values[9];
 };
 
