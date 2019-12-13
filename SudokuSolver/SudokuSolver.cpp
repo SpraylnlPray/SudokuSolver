@@ -36,16 +36,18 @@ int main()
 		if (solve(field))
 		{
 			auto timeEnd = chrono::high_resolution_clock::now();
-			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeStart).count();
+			auto duration = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
 			cout << "Solution:" << endl;
 			field->showData();
-			cout << "Time needed to calculate: " << duration << "ms" << endl;
+			cout << "Time needed to calculate: " << duration << (char)230 << "s" << endl; //microseconds
 		}
 		else
 			cout << "No solution possible" << endl;
 	}
 	else
 		cout << "There were no 81 input values given. Please check your input." << endl;
+
+	getchar();
 }
 
 bool solve(SudokuField* field) // backtracking algorithm
