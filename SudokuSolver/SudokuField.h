@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <ctype.h>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ public:
 	void showData();
 	SudokuEntry* getUnassignedCell();
 
-	bool InputValid = false;
+	bool InputIsValid;
 
 private:
 	short gridSize = 9;

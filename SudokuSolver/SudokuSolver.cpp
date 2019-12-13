@@ -27,7 +27,7 @@ int main()
 	}
 	
 	SudokuField* field = new SudokuField(input);
-	if (field->InputValid)
+	if (field->InputIsValid)
 	{
 		cout << "Input: " << endl;
 		field->showData();
@@ -45,7 +45,7 @@ int main()
 			cout << "No solution possible" << endl;
 	}
 	else
-		cout << "There were no 81 input values given. Please check your input." << endl;
+		cout << "There seems to be an error in the input. Please make sure to enter exactly 81 integer values from 0 to 9." << endl;
 
 	getchar();
 }
