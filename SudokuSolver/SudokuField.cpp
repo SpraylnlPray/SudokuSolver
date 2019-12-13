@@ -6,19 +6,18 @@ SudokuField::SudokuField(string input)
 {
 	input.erase(remove_if(input.begin(), input.end(), ::isspace), input.end());
 	input.erase(remove(input.begin(), input.end(), ','), input.end()); // format input data
-	
-	SudokuEntry* entries[81];
-	for (short i = 0; i < 81; i++)
-		entries[i] = new SudokuEntry((int)input[i] - 48, i);
-
-	for (short i = 0; i < gridSize; i++) // create data structures
+	if (input.length() == 81)
 	{
-		blocks[i] = new Block();
-		rows[i] = new SudokuVector();
-		cols[i] = new SudokuVector();
-	}
+		InputValid = true;
+		for (short i = 0; i < gridSize; i++) // create data structures
+		{
+			blocks[i] = new Block();
+			rows[i] = new SudokuVector();
+			cols[i] = new SudokuVector();
+		}
 
-	saveData(entries);
+		saveData(input);
+	}
 }
 
 
@@ -102,8 +101,12 @@ void SudokuField::createBlocks(SudokuEntry* entries[])
 
 }
 
-void SudokuField::saveData(SudokuEntry* entries[])
+void SudokuField::saveData(string input)
 {
+	SudokuEntry* entries[81];
+	for (short i = 0; i < 81; i++)
+		entries[i] = new SudokuEntry((int)input[i] - 48, i);
+
 	createRowsAndCols(entries);
 	createBlocks(entries);
 }

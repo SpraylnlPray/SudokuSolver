@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
 
 using namespace std;
 
@@ -26,19 +27,28 @@ int main()
 	}
 	
 	SudokuField* field = new SudokuField(input);
-	cout << "Input: " << endl;
-	field->showData();
-	
-	if (solve(field))
+	if (field->InputValid)
 	{
-		cout << "Solution:" << endl;
+		cout << "Input: " << endl;
 		field->showData();
+
+		auto timeStart = chrono::high_resolution_clock::now();
+		if (solve(field))
+		{
+			auto timeEnd = chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(timeEnd - timeStart).count();
+			cout << "Solution:" << endl;
+			field->showData();
+			cout << "Time needed to calculate: " << duration << "ms" << endl;
+		}
+		else
+			cout << "No solution possible" << endl;
 	}
 	else
-		cout << "No solution possible" << endl;
+		cout << "There were no 81 input values given. Please check your input." << endl;
 }
 
-bool solve(SudokuField* field)
+bool solve(SudokuField* field) // backtracking algorithm
 {
 	const int gridSize = 9;
 
